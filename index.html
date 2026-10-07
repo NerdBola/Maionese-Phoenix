@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b2a">
+  <meta name="description" content="Maionese Phoenix: jogos, desafios e futebol com Maionese BR." />
+  <title>Maionese Phoenix | Jogos do Maionese BR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f4e8;
+      --muted: #a8b6a8;
+      --forest: #102f24;
+      --forest-deep: #0a2119;
+      --lime: #d6f25d;
+      --orange: #ff8552;
+      --line: rgba(232, 244, 222, .15);
+      --display: 'Barlow Condensed', Impact, sans-serif;
+      --body: 'DM Sans', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body); background: var(--forest-deep); }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+    .shell { min-height: 100vh; overflow: hidden; background: radial-gradient(ellipse at 72% 5%, rgba(63, 110, 60, .3), transparent 37%), linear-gradient(135deg, #102f24 0%, #132c22 58%, #263b23 100%); }
+    .topbar { position: relative; z-index: 2; height: 76px; display: flex; justify-content: space-between; align-items: center; max-width: 1250px; padding: 0 30px; margin: auto; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
+    .brand-mark { position: relative; display: grid; place-items: center; width: 40px; height: 40px; background: var(--lime); border-radius: 12px 12px 14px 14px; color: var(--forest-deep); font-size: 23px; transform: rotate(-5deg); box-shadow: 3px 4px 0 #9ab539; }
+    .brand-mark::after { position: absolute; top: -5px; width: 17px; height: 6px; content: ''; background: #f5f1dd; border-radius: 4px 4px 1px 1px; }
+    .brand-name { font-family: var(--display); font-size: 24px; line-height: .9; font-weight: 800; letter-spacing: 0; }
+    .brand-name span { display: block; color: var(--lime); font-size: 13px; letter-spacing: 1.5px; }
+    .top-actions { display: flex; align-items: center; gap: 22px; }
+    .channel-link { color: #e2e9dc; text-decoration: none; font-size: 13px; font-weight: 700; }
+    .channel-link:hover { color: var(--lime); }
+    .online { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .online::before { width: 7px; height: 7px; border-radius: 50%; content: ''; background: var(--lime); box-shadow: 0 0 12px #d6f25d99; }
+    main { max-width: 1250px; min-height: calc(100vh - 76px); margin: auto; padding: 56px 30px 48px; }
+    .intro { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 28px; margin-bottom: 34px; animation: rise .6s ease both; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 10px; color: var(--lime); font-size: 11px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
+    .eyebrow::before { width: 21px; height: 2px; content: ''; background: var(--orange); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 10px; font-family: var(--display); font-size: clamp(48px, 6vw, 76px); line-height: .86; letter-spacing: 0; font-weight: 900; text-transform: uppercase; }
+    h1 em { color: var(--lime); font-style: normal; }
+    .intro-copy { max-width: 465px; margin-bottom: 0; color: #b5c2b5; font-size: 14px; line-height: 1.6; }
+    .progress-chip { display: flex; align-items: center; gap: 12px; min-width: 190px; padding: 13px 15px; border: 1px solid var(--line); background: #f1f3df0a; }
+    .progress-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: #d6f25d1c; font-size: 17px; }
+    .progress-copy { flex: 1; min-width: 0; }
+    .progress-chip small { display: block; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; }
+    .progress-chip strong { display: block; margin-top: 2px; font-size: 13px; }
+    .reset-button { display: grid; place-items: center; width: 32px; height: 32px; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 3px; background: transparent; color: #d3dfce; font-size: 20px; cursor: pointer; }
+    .reset-button:hover { border-color: var(--lime); color: var(--lime); }
+    .confirm-dialog { width: min(380px, calc(100% - 32px)); padding: 25px; border: 1px solid #d6f25d70; background: #163626; color: var(--ink); box-shadow: 0 20px 60px #0008; }
+    .confirm-dialog::backdrop { background: #06130fbd; }
+    .confirm-dialog h2 { margin: 0 0 8px; font-family: var(--display); font-size: 30px; text-transform: uppercase; }
+    .confirm-dialog p { margin-bottom: 20px; color: #c1cebd; font-size: 13px; line-height: 1.5; }
+    .confirm-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 13px; }
+    .section-heading h2 { margin: 0; font-family: var(--display); font-size: 24px; letter-spacing: .5px; text-transform: uppercase; }
+    .section-heading span { color: var(--muted); font-size: 11px; font-weight: 700; }
+    .games { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .game-card { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 354px; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 5px; background: #193a2b; text-align: left; cursor: pointer; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; animation: rise .6s ease both; }
+    .game-card:nth-child(2) { animation-delay: .08s; }
+    .game-card:nth-child(3) { animation-delay: .16s; }
+    .game-card:hover:not(:disabled) { transform: translateY(-5px); border-color: #d6f25d8a; box-shadow: 0 15px 35px #071a1170; }
+    .game-card:disabled { cursor: default; }
+    .art { position: relative; display: grid; place-items: center; height: 185px; flex-shrink: 0; overflow: hidden; }
+    .art::before, .art::after { position: absolute; content: ''; pointer-events: none; }
+    .art-memory { background: linear-gradient(140deg, #503d38, #a65839 56%, #e18447); }
+    .art-memory::before { inset: 0; opacity: .19; background: repeating-linear-gradient(135deg, transparent 0 15px, #f8eec6 16px 17px); }
+    .memory-art-cards { position: relative; display: grid; grid-template-columns: repeat(3, 57px); gap: 7px; transform: rotate(-6deg); }
+    .memory-art-cards span { display: grid; place-items: center; height: 68px; border: 2px solid #f6e9cc; border-radius: 6px; background: #254e3b; box-shadow: 2px 3px 0 #683c2c; font-size: 28px; }
+    .memory-art-cards span:nth-child(2), .memory-art-cards span:nth-child(4) { background: #f5edda; }
+    .memory-art-cards span:nth-child(4) { transform: rotate(7deg) translateY(-7px); }
+    .art-soccer { background: linear-gradient(160deg, #1c7148, #0e3b2b); }
+    .art-soccer::before { inset: 0; opacity: .5; background: repeating-linear-gradient(90deg, #a7df4f18 0 44px, transparent 44px 88px); }
+    .pitch-lines { position: absolute; width: 190px; height: 126px; border: 2px solid #e2f3d35c; border-radius: 2px; }
+    .pitch-lines::before { position: absolute; top: 0; bottom: 0; left: 50%; content: ''; border-left: 2px solid #e2f3d35c; }
+    .pitch-lines::after { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; border: 2px solid #e2f3d35c; border-radius: 50%; content: ''; transform: translate(-50%, -50%); }
+    .goal { position: absolute; top: 27px; left: 50%; width: 80px; height: 45px; border: 4px solid #f2f5e9; border-bottom: 0; transform: translateX(-50%); background: repeating-linear-gradient(90deg, transparent 0 12px, #f2f5e950 13px 14px), repeating-linear-gradient(0deg, transparent 0 11px, #f2f5e950 12px 13px); }
+    .keeper { position: absolute; top: 55px; left: calc(50% - 18px); z-index: 1; font-size: 43px; filter: drop-shadow(1px 3px 1px #123); }
+    .ball { position: absolute; z-index: 1; bottom: 35px; left: 53%; font-size: 34px; transform: rotate(-19deg); filter: drop-shadow(1px 4px 2px #1237); }
+    .art-sequel { background: linear-gradient(145deg, #252e29, #485143); }
+    .art-sequel::before { inset: 0; opacity: .35; background: repeating-linear-gradient(135deg, transparent 0 17px, #e5e7cf1a 18px 19px); }
+    .sequel-mark { color: #e2e4d1; font-family: var(--display); font-size: 60px; line-height: .76; font-weight: 900; text-align: center; text-shadow: 3px 4px 0 #1a291f; transform: rotate(-7deg); }
+    .sequel-mark span { display: block; color: var(--lime); font-size: 28px; }
+    .game-number { position: absolute; top: 13px; left: 14px; z-index: 1; color: #ffffffcf; font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; }
+    .tag { position: absolute; top: 12px; right: 12px; z-index: 1; padding: 6px 9px; background: var(--lime); color: #1b2d1c; font-size: 9px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .tag-soon { color: #e8eadf; background: #353c33; border: 1px solid #d7e0cf52; }
+    .card-content { display: flex; flex: 1; flex-direction: column; padding: 17px 17px 15px; }
+    .card-meta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 6px; color: var(--lime); font-size: 9px; font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase; }
+    .card-content h3 { margin-bottom: 6px; font-family: var(--display); font-size: 26px; font-weight: 800; letter-spacing: 0; line-height: 1; text-transform: uppercase; }
+    .card-content p { max-width: 300px; margin-bottom: 13px; color: #b6c2b5; font-size: 12px; line-height: 1.55; }
+    .play-link { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); color: #f5f1e8; font-size: 11px; font-weight: 800; letter-spacing: .4px; }
+    .play-link b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); color: #193523; font-size: 15px; transition: transform .2s; }
+    .game-card:hover:not(:disabled) .play-link b { transform: translateX(3px); }
+    .game-card:disabled .play-link { color: #a3ad9e; }
+    .game-card:disabled .play-link b { background: #4b564a; color: #c0c9b6; }
+    .footer { display: flex; justify-content: space-between; gap: 18px; margin-top: 35px; padding-top: 17px; border-top: 1px solid var(--line); color: #97a99a; font-size: 10px; }
+    .footer a { color: #c4d0c3; text-decoration: none; }
+    .footer a:hover { color: var(--lime); }
+    [hidden] { display: none !important; }
+    .game-view { max-width: 860px; margin: auto; animation: rise .35s ease both; }
+    .back-button { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; padding: 8px 0; border: 0; background: transparent; color: #c3d0c1; font-size: 12px; font-weight: 800; cursor: pointer; }
+    .back-button:hover { color: var(--lime); }
+    .game-header { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .game-header h1 { margin: 0; font-size: 48px; }
+    .game-header p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .scoreboard { display: flex; gap: 10px; }
+    .score-box { min-width: 92px; padding: 9px 12px; border: 1px solid var(--line); background: #ffffff09; text-align: center; }
+    .score-box small { display: block; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; }
+    .score-box strong { display: block; margin-top: 2px; font-family: var(--display); font-size: 23px; line-height: 1; }
+    .game-panel { padding: 22px; border: 1px solid var(--line); border-radius: 5px; background: #0b241b9c; }
+    .memory-status { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; color: #c2d0bf; font-size: 11px; font-weight: 700; }
+    .memory-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+    .memory-card { display: grid; place-items: center; aspect-ratio: 1 / .82; min-height: 70px; border: 1px solid #d6f25d36; border-radius: 4px; background: linear-gradient(145deg, #285239, #193b2a); color: transparent; font-size: clamp(22px, 4vw, 39px); cursor: pointer; transition: background .2s, transform .2s, border-color .2s; }
+    .memory-card::after { content: '✦'; color: var(--lime); font-size: 20px; }
+    .memory-card.revealed, .memory-card.matched { border-color: #d6f25d9c; background: #e7eddc; color: #152d20; transform: rotateY(0); }
+    .memory-card.revealed::after, .memory-card.matched::after { content: none; }
+    .memory-card.matched { background: #d6f25d; cursor: default; }
+    .message { min-height: 20px; margin: 15px 0 0; color: var(--lime); font-size: 12px; font-weight: 700; text-align: center; }
+    .action-row { display: flex; justify-content: center; gap: 10px; margin-top: 9px; }
+    .action-button { min-height: 40px; padding: 0 16px; border: 1px solid #d6f25d6b; border-radius: 3px; background: var(--lime); color: #183120; font-size: 11px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
+    .action-button:hover { background: #e4fc79; }
+    .action-button.secondary { background: transparent; color: #e3eadb; border-color: var(--line); }
+    .action-button.secondary:hover { border-color: var(--lime); }
+    .soccer-panel { padding: 0; overflow: hidden; }
+    .stadium { position: relative; min-height: 330px; overflow: hidden; background: repeating-linear-gradient(90deg, #1d7044 0 90px, #246f43 90px 180px); }
+    .stadium::before { position: absolute; inset: 0 0 auto; height: 90px; content: ''; background: repeating-linear-gradient(90deg, #16281f 0 16px, #314332 16px 32px); clip-path: polygon(0 0, 100% 0, 86% 100%, 14% 100%); opacity: .92; }
+    .stadium::after { position: absolute; right: -20px; bottom: -85px; left: -20px; height: 185px; content: ''; border: 2px solid #e5f2da66; border-radius: 50% 50% 0 0; }
+    .stadium-score { position: absolute; z-index: 3; top: 18px; left: 50%; padding: 7px 12px; background: #13271f; color: var(--lime); font-size: 10px; font-weight: 900; letter-spacing: 1px; transform: translateX(-50%); }
+    .soccer-goal { position: absolute; z-index: 1; top: 71px; left: 50%; width: 205px; height: 125px; border: 7px solid #f4f3e8; border-bottom: 0; background: repeating-linear-gradient(90deg, transparent 0 25px, #ffffff42 26px 28px), repeating-linear-gradient(0deg, transparent 0 21px, #ffffff42 22px 24px); transform: translateX(-50%); }
+    .goalkeeper { position: absolute; z-index: 2; top: 135px; left: calc(50% - 32px); font-size: 61px; transition: left .25s ease; filter: drop-shadow(0 4px 1px #14351e); }
+    .shooter { position: absolute; z-index: 2; bottom: 39px; left: 50%; font-size: 63px; transform: translateX(-50%); filter: drop-shadow(0 4px 1px #14351e); }
+    .soccer-ball { position: absolute; z-index: 2; bottom: 49px; left: 50%; font-size: 33px; transition: left .4s ease, bottom .4s ease, transform .4s ease; transform: translateX(-50%); }
+    .soccer-ball.kicked { bottom: 156px; transform: translateX(-50%) scale(.78) rotate(420deg); }
+    .kick-controls { padding: 19px; text-align: center; }
+    .kick-prompt { margin: 0 0 12px; color: #d4dfd0; font-size: 12px; font-weight: 700; }
+    .kick-buttons { display: flex; justify-content: center; gap: 9px; }
+    .kick-button { min-width: 100px; padding: 11px 14px; border: 1px solid #d6f25d70; border-radius: 3px; background: #1d4931; color: var(--ink); font-size: 11px; font-weight: 900; cursor: pointer; }
+    .kick-button:hover:not(:disabled) { background: #2b603e; border-color: var(--lime); }
+    .kick-button:disabled { cursor: default; opacity: .48; }
+    .modal-backdrop { position: fixed; z-index: 5; inset: 0; display: grid; place-items: center; padding: 20px; background: #06130fbd; }
+    .result-modal { width: min(390px, 100%); padding: 30px; border: 1px solid #d6f25d70; background: #163626; text-align: center; box-shadow: 0 20px 60px #0008; animation: rise .25s ease both; }
+    .result-icon { font-size: 43px; }
+    .result-modal h2 { margin: 5px 0 7px; font-family: var(--display); font-size: 35px; line-height: 1; text-transform: uppercase; }
+    .result-modal p { margin: 0 0 18px; color: #c1cebd; font-size: 13px; }
+    .modal-buttons { display: flex; justify-content: center; gap: 8px; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 780px) {
+      main { padding-top: 43px; }
+      .games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .game-card:last-child { grid-column: 1 / -1; min-height: 300px; }
+      .game-card:last-child .art { height: 150px; }
+    }
+    @media (max-width: 540px) {
+      .topbar { height: 66px; padding: 0 18px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .brand-name { font-size: 21px; }
+      .top-actions { gap: 0; }
+      .online { display: none; }
+      .channel-link { font-size: 11px; }
+      main { min-height: calc(100vh - 66px); padding: 37px 18px 28px; }
+      .intro { grid-template-columns: 1fr; gap: 17px; margin-bottom: 26px; }
+      h1 { font-size: 58px; }
+      .intro-copy { max-width: 370px; font-size: 13px; }
+      .progress-chip { width: fit-content; min-width: 0; padding: 8px 11px; }
+      .progress-icon { width: 30px; height: 30px; }
+      .section-heading h2 { font-size: 21px; }
+      .section-heading span { font-size: 9px; }
+      .games { grid-template-columns: 1fr; gap: 12px; }
+      .game-card, .game-card:last-child { min-height: 0; grid-column: auto; }
+      .art, .game-card:last-child .art { height: 170px; }
+      .card-content { padding: 14px; }
+      .card-content h3 { font-size: 24px; }
+      .footer { flex-direction: column; gap: 7px; margin-top: 25px; }
+      .game-header { align-items: start; flex-direction: column; }
+      .game-header h1 { font-size: 40px; }
+      .scoreboard { align-self: stretch; }
+      .score-box { flex: 1; }
+      .game-panel { padding: 13px; }
+      .memory-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+      .memory-card { min-height: 59px; }
+      .stadium { min-height: 290px; }
+      .soccer-goal { width: 175px; height: 105px; }
+      .goalkeeper { top: 123px; }
+      .kick-controls { padding: 15px 8px; }
+      .kick-button { min-width: 0; flex: 1; padding: 10px 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Maionese Phoenix, início">
+        <span class="brand-mark" aria-hidden="true">♨</span>
+        <span class="brand-name">MAIONESE<span>PHOENIX</span></span>
+      </a>
+      <div class="top-actions">
+        <span class="online">Central de jogos</span>
+        <a class="channel-link" href="https://www.youtube.com/@MAIONESEBR018" target="_blank" rel="noreferrer">Canal Maionese BR ↗</a>
+      </div>
+    </header>
+
+    <main id="home-view">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">O próximo capítulo começa aqui</p>
+          <h1 id="page-title">JOGUE.<br><em>VIRE LENDA.</em></h1>
+          <p class="intro-copy">Uma nova aventura do universo Maionese BR. Entre na partida, encare os desafios e mostre do que você é capaz.</p>
+        </div>
+        <div class="progress-chip" aria-live="polite">
+          <span class="progress-icon" aria-hidden="true">🏆</span>
+          <span class="progress-copy"><small>Sua jornada</small><strong id="home-progress">Fase 1 de 20</strong></span>
+          <button class="reset-button" id="reset-journey" type="button" aria-label="Resetar jornada" title="Resetar jornada">↻</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="games-title">
+        <div class="section-heading"><h2 id="games-title">Escolha sua missão</h2><span>3 JOGOS NO UNIVERSO</span></div>
+        <div class="games">
+          <button class="game-card" id="open-memory" type="button" aria-label="Jogar Jogo da Memória">
+            <span class="art art-memory" aria-hidden="true">
+              <span class="game-number">01 / DESAFIO</span><span class="tag">20 fases</span>
+              <span class="memory-art-cards"><span>🍕</span><span>✦</span><span>⚽</span><span>🧴</span><span>🔥</span><span>✦</span></span>
+            </span>
+            <span class="card-content"><span class="card-meta"><span>Memória & reflexo</span><span>◷ 5 MIN</span></span><span class="card-content"><h3>Jogo da Memória</h3><p>Encontre os pares, avance pelas 20 fases e prove que sua memória está afiada.</p><span class="play-link"><span>JOGAR AGORA</span><b aria-hidden="true">→</b></span></span></span>
+          </button>
+
+          <button class="game-card" id="open-soccer" type="button" aria-label="Jogar Maionese Soccer">
+            <span class="art art-soccer" aria-hidden="true">
+              <span class="game-number">02 / FUTEBOL</span><span class="tag">JOGÁVEL</span>
+              <span class="pitch-lines"></span><span class="goal"></span><span class="keeper">🧤</span><span class="ball">⚽</span>
+            </span>
+            <span class="card-content"><span class="card-meta"><span>Esporte & ação</span><span>◷ 3 MIN</span></span><span class="card-content"><h3>Maionese Soccer</h3><p>Hora da decisão! Marque gols contra o rival Come Ketchup na Pizza na disputa de pênaltis.</p><span class="play-link"><span>ENTRAR EM CAMPO</span><b aria-hidden="true">→</b></span></span></span>
+          </button>
+
+          <button class="game-card" id="open-sequel" type="button" aria-label="Maionese Soccer 2, em breve" disabled>
+            <span class="art art-sequel" aria-hidden="true">
+              <span class="game-number">03 / CONTINUAÇÃO</span><span class="tag tag-soon">EM BREVE</span>
+              <span class="sequel-mark">SOCCER<span>II</span></span>
+            </span>
+            <span class="card-content"><span class="card-meta"><span>Nova temporada</span><span>EM PRODUÇÃO</span></span><span class="card-content"><h3>Maionese Soccer 2</h3><p>A próxima partida já está no horizonte. Prepare-se para voltar ao campo.</p><span class="play-link"><span>AGUARDE O PRÓXIMO JOGO</span><b aria-hidden="true">Ⅱ</b></span></span></span>
+          </button>
+        </div>
+      </section>
+      <footer class="footer"><span>MAIONESE PHOENIX · UM UNIVERSO DE MAIONESE BR</span><a href="https://www.youtube.com/@MAIONESEBR018" target="_blank" rel="noreferrer">Conheça o canal ↗</a></footer>
+    </main>
+
+    <main id="memory-view" hidden>
+      <section class="game-view" aria-labelledby="memory-title">
+        <button class="back-button" type="button" data-home>← &nbsp;VOLTAR AOS JOGOS</button>
+        <div class="game-header"><div><p class="eyebrow">Desafio de memória</p><h1 id="memory-title">JOGO DA MEMÓRIA</h1><p>Encontre todos os pares para avançar de fase.</p></div><div class="scoreboard"><div class="score-box"><small>Fase</small><strong id="level-score">01 / 20</strong></div><div class="score-box"><small>Tentativas</small><strong id="attempt-score">0</strong></div></div></div>
+        <div class="game-panel"><div class="memory-status"><span id="pair-status">Pares encontrados: 0 / 3</span><span>MAIONESE PHOENIX</span></div><div class="memory-grid" id="memory-grid" aria-label="Tabuleiro do jogo da memória"></div><p class="message" id="memory-message" aria-live="polite">Vire duas cartas para encontrar um par.</p><div class="action-row"><button class="action-button secondary" id="reset-memory" type="button">Recomeçar fase</button></div></div>
+      </section>
+    </main>
+
+    <main id="soccer-view" hidden>
+      <section class="game-view" aria-labelledby="soccer-title">
+        <button class="back-button" type="button" data-home>← &nbsp;VOLTAR AOS JOGOS</button>
+        <div class="game-header"><div><p class="eyebrow">Maionese BR contra Come Ketchup na Pizza</p><h1 id="soccer-title">MAIONESE SOCCER</h1><p>Cinco cobranças. Escolha um canto e mande a bola para a rede.</p></div><div class="scoreboard"><div class="score-box"><small>Gols</small><strong id="goal-score">0</strong></div><div class="score-box"><small>Chutes</small><strong id="shot-score">0 / 5</strong></div></div></div>
+        <div class="game-panel soccer-panel"><div class="stadium" role="img" aria-label="Campo de futebol, goleiro adversário e meta"><div class="stadium-score">FINAL · MAIONESE × KETCHUP</div><div class="soccer-goal"></div><span class="goalkeeper" id="goalkeeper" aria-hidden="true">🧤</span><span class="shooter" aria-hidden="true">🧍</span><span class="soccer-ball" id="soccer-ball" aria-hidden="true">⚽</span></div><div class="kick-controls"><p class="kick-prompt" id="kick-prompt" aria-live="polite">Onde você vai chutar?</p><div class="kick-buttons"><button class="kick-button" data-kick="left" type="button">↖ CANTO ESQ.</button><button class="kick-button" data-kick="center" type="button">↑ NO MEIO</button><button class="kick-button" data-kick="right" type="button">CANTO DIR. ↗</button></div></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="result-modal" hidden>
+    <section class="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-icon" id="result-icon">🏆</div><h2 id="result-title">FASE COMPLETA!</h2><p id="result-copy"></p><div class="modal-buttons"><button class="action-button" id="result-primary" type="button">CONTINUAR</button><button class="action-button secondary" id="result-home" type="button">VOLTAR AOS JOGOS</button></div></section>
+  </div>
+
+  <dialog class="confirm-dialog" id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-description">
+    <h2 id="reset-title">Resetar jornada?</h2>
+    <p id="reset-description">Seu progresso do Jogo da Memória voltará para a fase 1. Essa ação não pode ser desfeita.</p>
+    <div class="confirm-actions"><button class="action-button secondary" id="cancel-reset" type="button">CANCELAR</button><button class="action-button" id="confirm-reset" type="button">RESETAR</button></div>
+  </dialog>
+
+  <script>
+    const homeView = document.querySelector('#home-view');
+    const memoryView = document.querySelector('#memory-view');
+    const soccerView = document.querySelector('#soccer-view');
+    const modal = document.querySelector('#result-modal');
+    const symbols = ['🧴', '⚽', '🍕', '🔥', '🥅', '🌶️', '🏆', '👟', '🧤', '🍟', '🎮', '🥤'];
+    const savedLevel = Number(localStorage.getItem('phoenix-memory-level')) || 1;
+    let memoryLevel = Math.min(20, Math.max(1, savedLevel));
+    let cards = [];
+    let revealed = [];
+    let matchedPairs = 0;
+    let attempts = 0;
+    let locked = false;
+    let soccerGoals = 0;
+    let soccerShots = 0;
+    let kickLocked = false;
+    let memoryTimer;
+
+    function showView(view) {
+      homeView.hidden = view !== 'home';
+      memoryView.hidden = view !== 'memory';
+      soccerView.hidden = view !== 'soccer';
+      modal.hidden = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+      document.querySelector('#home-progress').textContent = `Fase ${memoryLevel} de 20`;
+    }
+
+    function startMemory() {
+      clearTimeout(memoryTimer);
+      revealed = [];
+      matchedPairs = 0;
+      attempts = 0;
+      locked = false;
+      const pairCount = Math.min(3 + Math.floor((memoryLevel - 1) / 3), 9);
+      const deck = [...symbols.slice(0, pairCount), ...symbols.slice(0, pairCount)].sort(() => Math.random() - 0.5);
+      cards = deck;
+      document.querySelector('#level-score').textContent = `${String(memoryLevel).padStart(2, '0')} / 20`;
+      document.querySelector('#attempt-score').textContent = '0';
+      document.querySelector('#pair-status').textContent = `Pares encontrados: 0 / ${pairCount}`;
+      document.querySelector('#memory-message').textContent = 'Vire duas cartas para encontrar um par.';
+      const grid = document.querySelector('#memory-grid');
+      grid.replaceChildren(...deck.map((symbol, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'memory-card';
+        card.textContent = symbol;
+        card.setAttribute('aria-label', `Carta ${index + 1}, fechada`);
+        card.dataset.index = String(index);
+        card.addEventListener('click', () => revealCard(index));
+        return card;
+      }));
+    }
+
+    function revealCard(index) {
+      if (locked || revealed.includes(index)) return;
+      const card = document.querySelector(`.memory-card[data-index="${index}"]`);
+      if (card.classList.contains('matched')) return;
+      card.classList.add('revealed');
+      card.setAttribute('aria-label', `Carta ${index + 1}: ${cards[index]}`);
+      revealed.push(index);
+      if (revealed.length < 2) return;
+      attempts++;
+      document.querySelector('#attempt-score').textContent = String(attempts);
+      const [first, second] = revealed;
+      if (cards[first] === cards[second]) {
+        [first, second].forEach((matchedIndex) => {
+          const matchedCard = document.querySelector(`.memory-card[data-index="${matchedIndex}"]`);
+          matchedCard.classList.remove('revealed');
+          matchedCard.classList.add('matched');
+          matchedCard.setAttribute('aria-label', `Carta ${matchedIndex + 1}: par encontrado`);
+        });
+        matchedPairs++;
+        const totalPairs = cards.length / 2;
+        document.querySelector('#pair-status').textContent = `Pares encontrados: ${matchedPairs} / ${totalPairs}`;
+        revealed = [];
+        if (matchedPairs === totalPairs) finishMemoryLevel();
+      } else {
+        locked = true;
+        document.querySelector('#memory-message').textContent = 'Não foi dessa vez. Tente outra combinação!';
+        memoryTimer = setTimeout(() => {
+          [first, second].forEach((mismatchedIndex) => {
+            const mismatchedCard = document.querySelector(`.memory-card[data-index="${mismatchedIndex}"]`);
+            mismatchedCard.classList.remove('revealed');
+            mismatchedCard.setAttribute('aria-label', `Carta ${mismatchedIndex + 1}, fechada`);
+          });
+          revealed = [];
+          locked = false;
+          document.querySelector('#memory-message').textContent = 'Vire duas cartas para encontrar um par.';
+        }, 850);
+      }
+    }
+
+    function finishMemoryLevel() {
+      if (memoryLevel < 20) {
+        memoryLevel++;
+        localStorage.setItem('phoenix-memory-level', String(memoryLevel));
+        updateProgress();
+        showResult('🏆', 'FASE COMPLETA!', `Boa! Você encontrou todos os pares em ${attempts} tentativas. A fase ${memoryLevel} está liberada.`, 'PRÓXIMA FASE', () => {
+          modal.hidden = true;
+          startMemory();
+        });
+      } else {
+        showResult('🔥', 'VOCÊ VIROU LENDA!', `As 20 fases completas em ${attempts} tentativas. A plataforma é sua!`, 'JOGAR DE NOVO', () => {
+          memoryLevel = 1;
+          localStorage.setItem('phoenix-memory-level', '1');
+          updateProgress();
+          modal.hidden = true;
+          startMemory();
+        });
+      }
+    }
+
+    function showResult(icon, title, copy, action, callback) {
+      document.querySelector('#result-icon').textContent = icon;
+      document.querySelector('#result-title').textContent = title;
+      document.querySelector('#result-copy').textContent = copy;
+      const primary = document.querySelector('#result-primary');
+      primary.textContent = action;
+      primary.onclick = callback;
+      modal.hidden = false;
+      primary.focus();
+    }
+
+    function startSoccer() {
+      soccerGoals = 0;
+      soccerShots = 0;
+      kickLocked = false;
+      updateSoccerScore();
+      document.querySelector('#kick-prompt').textContent = 'Onde você vai chutar?';
+      document.querySelector('#soccer-ball').classList.remove('kicked');
+      document.querySelectorAll('.kick-button').forEach((button) => { button.disabled = false; });
+    }
+
+    function updateSoccerScore() {
+      document.querySelector('#goal-score').textContent = String(soccerGoals);
+      document.querySelector('#shot-score').textContent = `${soccerShots} / 5`;
+    }
+
+    function takeKick(direction) {
+      if (kickLocked || soccerShots >= 5) return;
+      kickLocked = true;
+      const keeperDirection = ['left', 'center', 'right'][Math.floor(Math.random() * 3)];
+      const positions = { left: 'calc(50% - 90px)', center: 'calc(50% - 32px)', right: 'calc(50% + 26px)' };
+      document.querySelector('#goalkeeper').style.left = positions[keeperDirection];
+      const ball = document.querySelector('#soccer-ball');
+      ball.style.left = direction === 'left' ? '40%' : direction === 'right' ? '60%' : '50%';
+      ball.classList.add('kicked');
+      const scored = keeperDirection !== direction;
+      soccerShots++;
+      if (scored) soccerGoals++;
+      updateSoccerScore();
+      document.querySelector('#kick-prompt').textContent = scored ? 'GOOOOL! A bola foi para a rede!' : 'O goleiro defendeu! Tente no próximo chute.';
+      document.querySelectorAll('.kick-button').forEach((button) => { button.disabled = true; });
+      setTimeout(() => {
+        ball.classList.remove('kicked');
+        ball.style.left = '50%';
+        document.querySelector('#goalkeeper').style.left = 'calc(50% - 32px)';
+        if (soccerShots === 5) {
+          showResult(soccerGoals >= 3 ? '🏆' : '⚽', soccerGoals >= 3 ? 'VITÓRIA MAIONESE!' : 'FIM DE JOGO!', `Você marcou ${soccerGoals} de 5 gols contra o Come Ketchup na Pizza.`, 'REVANCHE', startSoccer);
+        } else {
+          kickLocked = false;
+          document.querySelector('#kick-prompt').textContent = `Chute ${soccerShots + 1} de 5. Escolha um canto!`;
+          document.querySelectorAll('.kick-button').forEach((button) => { button.disabled = false; });
+        }
+      }, 700);
+    }
+
+    document.querySelector('#open-memory').addEventListener('click', () => { showView('memory'); startMemory(); });
+    document.querySelector('#open-soccer').addEventListener('click', () => { showView('soccer'); startSoccer(); });
+    document.querySelectorAll('[data-home]').forEach((button) => button.addEventListener('click', () => showView('home')));
+    document.querySelector('#reset-memory').addEventListener('click', startMemory);
+    document.querySelectorAll('[data-kick]').forEach((button) => button.addEventListener('click', () => takeKick(button.dataset.kick)));
+    document.querySelector('#result-home').addEventListener('click', () => showView('home'));
+    const resetDialog = document.querySelector('#reset-dialog');
+    document.querySelector('#reset-journey').addEventListener('click', () => resetDialog.showModal());
+    document.querySelector('#cancel-reset').addEventListener('click', () => resetDialog.close());
+    document.querySelector('#confirm-reset').addEventListener('click', () => {
+      localStorage.removeItem('phoenix-memory-level');
+      memoryLevel = 1;
+      updateProgress();
+      resetDialog.close();
+    });
+    updateProgress();
+  </script>
+</body>
+</html>
