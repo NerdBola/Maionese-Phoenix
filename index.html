@@ -88,6 +88,11 @@
     .art-sequel::before { inset: 0; opacity: .35; background: repeating-linear-gradient(135deg, transparent 0 17px, #e5e7cf1a 18px 19px); }
     .sequel-mark { color: #e2e4d1; font-family: var(--display); font-size: 60px; line-height: .76; font-weight: 900; text-align: center; text-shadow: 3px 4px 0 #1a291f; transform: rotate(-7deg); }
     .sequel-mark span { display: block; color: var(--lime); font-size: 28px; }
+    .art-letters { background: linear-gradient(135deg, #d5e45a, #91b846 54%, #3d8650); }
+    .art-letters::before { inset: 0; opacity: .2; background: repeating-linear-gradient(135deg, transparent 0 15px, #173a261a 16px 17px); }
+    .letter-art-grid { position: relative; display: grid; grid-template-columns: repeat(4, 43px); gap: 6px; transform: rotate(-6deg); }
+    .letter-art-grid span { display: grid; place-items: center; height: 45px; border: 2px solid #f6f0d2; border-radius: 4px; background: #285239; color: #f6f0d2; font-family: var(--display); font-size: 26px; font-weight: 900; box-shadow: 2px 3px 0 #1b3929; }
+    .letter-art-grid span:nth-child(2), .letter-art-grid span:nth-child(5) { background: #f6f0d2; color: #285239; }
     .game-number { position: absolute; top: 13px; left: 14px; z-index: 1; color: #ffffffcf; font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; }
     .tag { position: absolute; top: 12px; right: 12px; z-index: 1; padding: 6px 9px; background: var(--lime); color: #1b2d1c; font-size: 9px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
     .tag-soon { color: #e8eadf; background: #353c33; border: 1px solid #d7e0cf52; }
@@ -105,6 +110,7 @@
     .footer a:hover { color: var(--lime); }
     [hidden] { display: none !important; }
     .game-view { max-width: 860px; margin: auto; animation: rise .35s ease both; }
+    .letters-game-view { max-width: 1020px; }
     .back-button { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; padding: 8px 0; border: 0; background: transparent; color: #c3d0c1; font-size: 12px; font-weight: 800; cursor: pointer; }
     .back-button:hover { color: var(--lime); }
     .game-header { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
@@ -122,6 +128,11 @@
     .memory-card.revealed, .memory-card.matched { border-color: #d6f25d9c; background: #e7eddc; color: #152d20; transform: rotateY(0); }
     .memory-card.revealed::after, .memory-card.matched::after { content: none; }
     .memory-card.matched { background: #d6f25d; cursor: default; }
+    .letters-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 7px; }
+    .letters-grid .memory-card { min-height: 57px; aspect-ratio: 1; border-color: #ff855258; background: linear-gradient(145deg, #754733, #493529); font-family: var(--display); font-size: clamp(22px, 3vw, 32px); font-weight: 800; }
+    .letters-grid .memory-card::after { color: #ffd080; font-size: 17px; }
+    .letters-grid .memory-card.revealed { border-color: #ffb279; background: #f6e9c9; color: #253b2b; }
+    .letters-grid .memory-card.matched { border-color: #e0f27c; background: #d6f25d; color: #253b2b; }
     .message { min-height: 20px; margin: 15px 0 0; color: var(--lime); font-size: 12px; font-weight: 700; text-align: center; }
     .action-row { display: flex; justify-content: center; gap: 10px; margin-top: 9px; }
     .action-button { min-height: 40px; padding: 0 16px; border: 1px solid #d6f25d6b; border-radius: 3px; background: var(--lime); color: #183120; font-size: 11px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
@@ -156,6 +167,7 @@
       .games { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .game-card:last-child { grid-column: 1 / -1; min-height: 300px; }
       .game-card:last-child .art { height: 150px; }
+      .letters-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     }
     @media (max-width: 540px) {
       .topbar { height: 66px; padding: 0 18px; }
@@ -185,6 +197,8 @@
       .game-panel { padding: 13px; }
       .memory-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
       .memory-card { min-height: 59px; }
+      .letters-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+      .letters-grid .memory-card { min-height: 0; font-size: 24px; }
       .stadium { min-height: 290px; }
       .soccer-goal { width: 175px; height: 105px; }
       .goalkeeper { top: 123px; }
@@ -224,7 +238,7 @@
       </section>
 
       <section aria-labelledby="games-title">
-        <div class="section-heading"><h2 id="games-title">Escolha sua missão</h2><span>3 JOGOS NO UNIVERSO</span></div>
+        <div class="section-heading"><h2 id="games-title">Escolha sua missão</h2><span>4 JOGOS NO UNIVERSO</span></div>
         <div class="games">
           <button class="game-card" id="open-memory" type="button" aria-label="Jogar Jogo da Memória">
             <span class="art art-memory" aria-hidden="true">
@@ -234,9 +248,17 @@
             <span class="card-content"><span class="card-meta"><span>Memória & reflexo</span><span>◷ 5 MIN</span></span><span class="card-content"><h3>Jogo da Memória</h3><p>Encontre os pares, avance pelas 20 fases e prove que sua memória está afiada.</p><span class="play-link"><span>JOGAR AGORA</span><b aria-hidden="true">→</b></span></span></span>
           </button>
 
+          <button class="game-card" id="open-memory-two" type="button" aria-label="Jogar Jogo da Memória 2: Ache as Letras">
+            <span class="art art-letters" aria-hidden="true">
+              <span class="game-number">02 / CONTINUAÇÃO</span><span class="tag">20 fases</span>
+              <span class="letter-art-grid"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span></span>
+            </span>
+            <span class="card-content"><span class="card-meta"><span>Memória & alfabeto</span><span id="memory-two-progress">FASE 1 / 20</span></span><span class="card-content"><h3>Jogo da Memória 2: Ache as Letras</h3><p>A continuação começa na fase final do primeiro jogo. Encontre os pares de letras em desafios cada vez maiores.</p><span class="play-link"><span>ACEITAR O DESAFIO</span><b aria-hidden="true">→</b></span></span></span>
+          </button>
+
           <button class="game-card" id="open-soccer" type="button" aria-label="Jogar Maionese Soccer">
             <span class="art art-soccer" aria-hidden="true">
-              <span class="game-number">02 / FUTEBOL</span><span class="tag">JOGÁVEL</span>
+              <span class="game-number">03 / FUTEBOL</span><span class="tag">JOGÁVEL</span>
               <span class="pitch-lines"></span><span class="goal"></span><span class="keeper">🧤</span><span class="ball">⚽</span>
             </span>
             <span class="card-content"><span class="card-meta"><span>Esporte & ação</span><span>◷ 3 MIN</span></span><span class="card-content"><h3>Maionese Soccer</h3><p>Hora da decisão! Marque gols contra o rival Come Ketchup na Pizza na disputa de pênaltis.</p><span class="play-link"><span>ENTRAR EM CAMPO</span><b aria-hidden="true">→</b></span></span></span>
@@ -244,7 +266,7 @@
 
           <button class="game-card" id="open-sequel" type="button" aria-label="Maionese Soccer 2, em breve" disabled>
             <span class="art art-sequel" aria-hidden="true">
-              <span class="game-number">03 / CONTINUAÇÃO</span><span class="tag tag-soon">EM BREVE</span>
+              <span class="game-number">04 / CONTINUAÇÃO</span><span class="tag tag-soon">EM BREVE</span>
               <span class="sequel-mark">SOCCER<span>II</span></span>
             </span>
             <span class="card-content"><span class="card-meta"><span>Nova temporada</span><span>EM PRODUÇÃO</span></span><span class="card-content"><h3>Maionese Soccer 2</h3><p>A próxima partida já está no horizonte. Prepare-se para voltar ao campo.</p><span class="play-link"><span>AGUARDE O PRÓXIMO JOGO</span><b aria-hidden="true">Ⅱ</b></span></span></span>
@@ -259,6 +281,14 @@
         <button class="back-button" type="button" data-home>← &nbsp;VOLTAR AOS JOGOS</button>
         <div class="game-header"><div><p class="eyebrow">Desafio de memória</p><h1 id="memory-title">JOGO DA MEMÓRIA</h1><p>Encontre todos os pares para avançar de fase.</p></div><div class="scoreboard"><div class="score-box"><small>Fase</small><strong id="level-score">01 / 20</strong></div><div class="score-box"><small>Tentativas</small><strong id="attempt-score">0</strong></div></div></div>
         <div class="game-panel"><div class="memory-status"><span id="pair-status">Pares encontrados: 0 / 3</span><span>MAIONESE PHOENIX</span></div><div class="memory-grid" id="memory-grid" aria-label="Tabuleiro do jogo da memória"></div><p class="message" id="memory-message" aria-live="polite">Vire duas cartas para encontrar um par.</p><div class="action-row"><button class="action-button secondary" id="reset-memory" type="button">Recomeçar fase</button></div></div>
+      </section>
+    </main>
+
+    <main id="memory-two-view" hidden>
+      <section class="game-view letters-game-view" aria-labelledby="memory-two-title">
+        <button class="back-button" type="button" data-home>← &nbsp;VOLTAR AOS JOGOS</button>
+        <div class="game-header"><div><p class="eyebrow">A continuação do desafio</p><h1 id="memory-two-title">ACHE AS LETRAS</h1><p>Comece com a dificuldade final do primeiro jogo. Cada fase traz mais pares para encontrar.</p></div><div class="scoreboard"><div class="score-box"><small>Fase</small><strong id="memory-two-level">01 / 20</strong></div><div class="score-box"><small>Pares</small><strong id="memory-two-pairs">09</strong></div><div class="score-box"><small>Tentativas</small><strong id="memory-two-attempts">0</strong></div></div></div>
+        <div class="game-panel"><div class="memory-status"><span id="memory-two-pair-status">Pares encontrados: 0 / 9</span><span>ALFABETO PHOENIX</span></div><div class="memory-grid letters-grid" id="memory-two-grid" aria-label="Tabuleiro do jogo Ache as Letras"></div><p class="message" id="memory-two-message" aria-live="polite">Encontre todos os pares de letras para avançar.</p><div class="action-row"><button class="action-button secondary" id="reset-memory-two" type="button">Recomeçar fase</button></div></div>
       </section>
     </main>
 
@@ -277,18 +307,22 @@
 
   <dialog class="confirm-dialog" id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-description">
     <h2 id="reset-title">Resetar jornada?</h2>
-    <p id="reset-description">Seu progresso do Jogo da Memória voltará para a fase 1. Essa ação não pode ser desfeita.</p>
+    <p id="reset-description">Seu progresso nos jogos de memória voltará para a fase 1. Essa ação não pode ser desfeita.</p>
     <div class="confirm-actions"><button class="action-button secondary" id="cancel-reset" type="button">CANCELAR</button><button class="action-button" id="confirm-reset" type="button">RESETAR</button></div>
   </dialog>
 
   <script>
     const homeView = document.querySelector('#home-view');
     const memoryView = document.querySelector('#memory-view');
+    const memoryTwoView = document.querySelector('#memory-two-view');
     const soccerView = document.querySelector('#soccer-view');
     const modal = document.querySelector('#result-modal');
     const symbols = ['🧴', '⚽', '🍕', '🔥', '🥅', '🌶️', '🏆', '👟', '🧤', '🍟', '🎮', '🥤'];
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const savedLevel = Number(localStorage.getItem('phoenix-memory-level')) || 1;
     let memoryLevel = Math.min(20, Math.max(1, savedLevel));
+    const savedMemoryTwoLevel = Number(localStorage.getItem('phoenix-memory-two-level')) || 1;
+    let memoryTwoLevel = Math.min(20, Math.max(1, savedMemoryTwoLevel));
     let cards = [];
     let revealed = [];
     let matchedPairs = 0;
@@ -302,6 +336,7 @@
     function showView(view) {
       homeView.hidden = view !== 'home';
       memoryView.hidden = view !== 'memory';
+      memoryTwoView.hidden = view !== 'memory-two';
       soccerView.hidden = view !== 'soccer';
       modal.hidden = true;
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -309,6 +344,10 @@
 
     function updateProgress() {
       document.querySelector('#home-progress').textContent = `Fase ${memoryLevel} de 20`;
+    }
+
+    function updateMemoryTwoProgress() {
+      document.querySelector('#memory-two-progress').textContent = `FASE ${memoryTwoLevel} / 20`;
     }
 
     function startMemory() {
@@ -335,6 +374,92 @@
         card.addEventListener('click', () => revealCard(index));
         return card;
       }));
+    }
+
+    function startMemoryTwo() {
+      clearTimeout(memoryTimer);
+      revealed = [];
+      matchedPairs = 0;
+      attempts = 0;
+      locked = false;
+      const pairCount = 9 + Math.floor((memoryTwoLevel - 1) * 17 / 19);
+      const deck = [...alphabet.slice(0, pairCount), ...alphabet.slice(0, pairCount)].sort(() => Math.random() - 0.5);
+      cards = deck;
+      document.querySelector('#memory-two-level').textContent = `${String(memoryTwoLevel).padStart(2, '0')} / 20`;
+      document.querySelector('#memory-two-pairs').textContent = String(pairCount).padStart(2, '0');
+      document.querySelector('#memory-two-attempts').textContent = '0';
+      document.querySelector('#memory-two-pair-status').textContent = `Pares encontrados: 0 / ${pairCount}`;
+      document.querySelector('#memory-two-message').textContent = 'Encontre todos os pares de letras para avançar.';
+      const grid = document.querySelector('#memory-two-grid');
+      grid.replaceChildren(...deck.map((letter, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'memory-card';
+        card.textContent = letter;
+        card.setAttribute('aria-label', `Carta ${index + 1}, fechada`);
+        card.dataset.index = String(index);
+        card.addEventListener('click', () => revealMemoryTwoCard(index));
+        return card;
+      }));
+    }
+
+    function revealMemoryTwoCard(index) {
+      if (locked || revealed.includes(index)) return;
+      const card = document.querySelector(`#memory-two-grid .memory-card[data-index="${index}"]`);
+      if (card.classList.contains('matched')) return;
+      card.classList.add('revealed');
+      card.setAttribute('aria-label', `Carta ${index + 1}: ${cards[index]}`);
+      revealed.push(index);
+      if (revealed.length < 2) return;
+      attempts++;
+      document.querySelector('#memory-two-attempts').textContent = String(attempts);
+      const [first, second] = revealed;
+      if (cards[first] === cards[second]) {
+        [first, second].forEach((matchedIndex) => {
+          const matchedCard = document.querySelector(`#memory-two-grid .memory-card[data-index="${matchedIndex}"]`);
+          matchedCard.classList.remove('revealed');
+          matchedCard.classList.add('matched');
+          matchedCard.setAttribute('aria-label', `Carta ${matchedIndex + 1}: par encontrado`);
+        });
+        matchedPairs++;
+        const totalPairs = cards.length / 2;
+        document.querySelector('#memory-two-pair-status').textContent = `Pares encontrados: ${matchedPairs} / ${totalPairs}`;
+        revealed = [];
+        if (matchedPairs === totalPairs) finishMemoryTwoLevel();
+      } else {
+        locked = true;
+        document.querySelector('#memory-two-message').textContent = 'As letras não formam um par. Tente de novo!';
+        memoryTimer = setTimeout(() => {
+          [first, second].forEach((mismatchedIndex) => {
+            const mismatchedCard = document.querySelector(`#memory-two-grid .memory-card[data-index="${mismatchedIndex}"]`);
+            mismatchedCard.classList.remove('revealed');
+            mismatchedCard.setAttribute('aria-label', `Carta ${mismatchedIndex + 1}, fechada`);
+          });
+          revealed = [];
+          locked = false;
+          document.querySelector('#memory-two-message').textContent = 'Encontre todos os pares de letras para avançar.';
+        }, 850);
+      }
+    }
+
+    function finishMemoryTwoLevel() {
+      if (memoryTwoLevel < 20) {
+        memoryTwoLevel++;
+        localStorage.setItem('phoenix-memory-two-level', String(memoryTwoLevel));
+        updateMemoryTwoProgress();
+        showResult('🔤', 'FASE COMPLETA!', `Você encontrou todos os pares em ${attempts} tentativas. A fase ${memoryTwoLevel} está liberada.`, 'PRÓXIMA FASE', () => {
+          modal.hidden = true;
+          startMemoryTwo();
+        });
+      } else {
+        showResult('🔥', 'ALFABETO DOMINADO!', `Você venceu as 20 fases de Ache as Letras em ${attempts} tentativas!`, 'JOGAR DE NOVO', () => {
+          memoryTwoLevel = 1;
+          localStorage.setItem('phoenix-memory-two-level', '1');
+          updateMemoryTwoProgress();
+          modal.hidden = true;
+          startMemoryTwo();
+        });
+      }
     }
 
     function revealCard(index) {
@@ -452,9 +577,11 @@
     }
 
     document.querySelector('#open-memory').addEventListener('click', () => { showView('memory'); startMemory(); });
+    document.querySelector('#open-memory-two').addEventListener('click', () => { showView('memory-two'); startMemoryTwo(); });
     document.querySelector('#open-soccer').addEventListener('click', () => { showView('soccer'); startSoccer(); });
     document.querySelectorAll('[data-home]').forEach((button) => button.addEventListener('click', () => showView('home')));
     document.querySelector('#reset-memory').addEventListener('click', startMemory);
+    document.querySelector('#reset-memory-two').addEventListener('click', startMemoryTwo);
     document.querySelectorAll('[data-kick]').forEach((button) => button.addEventListener('click', () => takeKick(button.dataset.kick)));
     document.querySelector('#result-home').addEventListener('click', () => showView('home'));
     const resetDialog = document.querySelector('#reset-dialog');
@@ -462,11 +589,15 @@
     document.querySelector('#cancel-reset').addEventListener('click', () => resetDialog.close());
     document.querySelector('#confirm-reset').addEventListener('click', () => {
       localStorage.removeItem('phoenix-memory-level');
+      localStorage.removeItem('phoenix-memory-two-level');
       memoryLevel = 1;
+      memoryTwoLevel = 1;
       updateProgress();
+      updateMemoryTwoProgress();
       resetDialog.close();
     });
     updateProgress();
+    updateMemoryTwoProgress();
   </script>
 </body>
 </html>
